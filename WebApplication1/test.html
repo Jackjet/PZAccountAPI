@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="jquery-2.1.4.js"></script>
+    <script>
+        $(function () {
+            //testAdd('salary');
+            testAdd('everyday');
+            //testAdd('last');
+
+           // testRead('salary');
+           // testRead('everyday');
+            testRead('status');
+        })
+
+        function testAdd(t) {
+            $.ajax({
+                url: '/api/addcost.ashx',
+                data: {t:t,uid:2,month:'2016-2-16',cate:1,money:5000,other:"吃饭"},
+                type: 'POST',
+                success: function (result) {
+
+                }
+            });
+        }
+
+        function testRead(t){
+            $.ajax({
+                url: '/api/cost.ashx',
+                data: { t: t, uid: 1 },
+                type: 'get',
+                success: function (result) {
+
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

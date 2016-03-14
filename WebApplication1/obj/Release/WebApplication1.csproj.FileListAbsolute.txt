@@ -1,0 +1,7 @@
+D:\Project\WebApplication1\WebApplication1\bin\WebApplication1.dll.config
+D:\Project\WebApplication1\WebApplication1\bin\WebApplication1.dll
+D:\Project\WebApplication1\WebApplication1\bin\WebApplication1.pdb
+D:\Project\WebApplication1\WebApplication1\bin\Newtonsoft.Json.dll
+D:\Project\WebApplication1\WebApplication1\obj\Release\WebApplication1.dll
+D:\Project\WebApplication1\WebApplication1\obj\Release\WebApplication1.pdb
+D:\Project\WebApplication1\WebApplication1\obj\Release\WebApplication1.csprojResolveAssemblyReference.cache
