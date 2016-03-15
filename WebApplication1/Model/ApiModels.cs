@@ -19,7 +19,7 @@ namespace API.Model
         public Category parent_category { get; set; }
     }
 
-    public class Account
+    public class Account : AccountDetail
     {
         public Account()
         {
@@ -32,10 +32,27 @@ namespace API.Model
         public User from_user { get; set; }
         public User to_user { get; set; }
         public User operate_user { get; set; }
+    }
+
+    public class AccountResult
+    {
+        public AccountResult()
+        {
+            details = new List<AccountDetail>();
+            user = new User();
+        }
+        public User user { get; set; }
+        public List<AccountDetail> details { get; set; }
+    }
+
+    public class AccountDetail
+    {
+        public int id { get; set; }
         public float money { get; set; }
         public Category category { get; set; }
         public AccountType account_type { get; set; }
         public string other { get; set; }
+        public string addtime { get; set; }
     }
 
     public enum AccountType

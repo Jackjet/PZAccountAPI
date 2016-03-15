@@ -79,6 +79,9 @@ namespace API.api
             int operate_user = GetRequestValue(context, "operate_user", form).ToInt();
             int category_id = GetRequestValue(context, "category", form).ToInt();
             int type = GetRequestValue(context, "type", form).ToInt();
+            int pageindex = GetRequestValue(context, "page_index", form).ToInt();
+            int pagesize = GetRequestValue(context, "page_size", form).ToInt();
+            int lastid = GetRequestValue(context, "last_id", form).ToInt();
             float money = GetRequestValue(context, "money", form).ToFloat();
             string other = GetRequestValue(context, "other", form).ToStrings();
           
@@ -93,12 +96,20 @@ namespace API.api
                     result = PZAccountAPI.Instance.QueryUserSummary(operate_user);
                     break;
                 case OPERATE_QUERY_COST_LIST:
+                    result = PZAccountAPI.Instance.QueryUserCostList(operate_user, pageindex, pagesize);
                     break;
                 case OPERATE_QUERY_PERSONAL_SALARY_LIST:
+                    result = PZAccountAPI.Instance.QueryUserSalaryList(operate_user, pageindex, pagesize);
                     break;
                 case OPERATE_QUERY_USER_TRANSFEROM:
+                    result = PZAccountAPI.Instance.QueryUserTransfrom(from_user, to_user, lastid, pagesize);
                     break;
                 default:
+                    result = JsonHelper.JsonResult(new JsonResultModel
+                    {
+                        result = JsonResult.JsonResultFailure,
+                        msg = "op is not valid"
+                    });
                     break;
             }
             context.Response.Write(result);

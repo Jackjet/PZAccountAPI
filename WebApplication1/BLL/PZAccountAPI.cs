@@ -5,6 +5,7 @@ using System.Web;
 using API.Model;
 using System.Data.SqlClient;
 using API.Util;
+using System.Data;
 
 namespace API.BLL
 {
@@ -101,8 +102,9 @@ namespace API.BLL
         #region 查询消费记录
         public string QueryUserCostList(int userid, int pageIndex, int pageSize = 20)
         {
-            return "";
+            return QueryAccountList(userid, AccountType.AccountTypeCost.GetHashCode(), pageIndex, pageSize);
         }
+
         #endregion
 
         #region 查询工资记录
@@ -116,7 +118,7 @@ namespace API.BLL
                     msg = "operate_user can't be 0"
                 });
             }
-            return "";
+            return QueryAccountList(userid, AccountType.AccountTypeSalary.GetHashCode(), pageIndex, pageSize);
         }
         #endregion
 
@@ -131,10 +133,79 @@ namespace API.BLL
                     msg = "from_user or to_user can't be 0"
                 });
             }
-            return "";
+
+            return QueryTransform(fromid,toid,lastid,pageSize);
         }
         #endregion
 
+        #region 私有总查询
+        private string QueryAccountList(int userid, int type, int pageIndex = 1, int pageSize = 20, int category = 0)
+        {
+            if (pageSize == 0) { pageSize = 20; }
+            const string spName = "[sq_fanyuepan].[Proc_GetUserAccountsList]";
+            var parameters = new List<SqlParameter> {
+                DBUtil.MakeParameterInt("type",type),
+                 DBUtil.MakeParameterInt("userid",userid),
+                  DBUtil.MakeParameterInt("category",category),
+                   DBUtil.MakeParameterInt("pageindex",pageIndex),
+                   DBUtil.MakeParameterInt("pagesize",pageSize),
+            };
+            var dt = DBUtil.ExecuteDataTableStoreProcedure(spName, parameters.ToArray());
+
+            #region 暂不采用此方法，转换比较复杂
+            //var data = new List<AccountResult>();
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    int uid = dr["operate_user"].ToInt();
+            //    if (!data.Any(x => x.user.user_id == uid))
+            //    {
+            //        data.Add(new AccountResult
+            //        {
+            //            user = new User
+            //            {
+            //                user_id = dr["operate_user"].ToInt(),
+            //                user_name = dr["username"].ToString(),
+            //                user_photo = dr["userphoto"].ToString()
+            //            }
+            //        });
+            //    }
+            //    var first = data.First(x => x.user.user_id == uid);
+            //    first.details.Add(new AccountDetail
+            //    {
+            //        id = dr["id"].ToInt(),
+            //        addtime = dr["addtime"].ToString(),
+            //        other = dr["other"].ToString(),
+            //        account_type = (AccountType)dr["t"].ToInt(),
+            //        category = new Category { category_id = dr["category"].ToInt(), category_name = dr["name"].ToString() },
+            //        money = dr["money"].ToFloat()
+            //    });
+            //}
+            #endregion
+
+            return JsonHelper.JsonResult(new JsonResultModel
+            {
+                data = dt,
+                result = JsonResult.JsonResultSuccess
+            });
+        }
+
+        private string QueryTransform(int fuserid, int touserid, int lastid, int pageSize = 20)
+        {
+            const string spName = "[sq_fanyuepan].[Proc_QueryTransform]";
+            var parameters = new List<SqlParameter> {
+                DBUtil.MakeParameterInt("fuserid",fuserid),
+                DBUtil.MakeParameterInt("touserid",touserid),
+                DBUtil.MakeParameterInt("lastid",lastid),
+                DBUtil.MakeParameterInt("pagesize",pageSize)
+            };
+            var dt = DBUtil.ExecuteDataTableStoreProcedure(spName, parameters.ToArray());
+            return JsonHelper.JsonResult(new JsonResultModel
+            {
+                data = dt,
+                result = JsonResult.JsonResultSuccess
+            });
+        }
+        #endregion
 
     }
 
