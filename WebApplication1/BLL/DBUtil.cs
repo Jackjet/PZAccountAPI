@@ -10,7 +10,7 @@ namespace API.BLL
 {
     public sealed class DBUtil
     {
-        private static readonly string SqlConnectionString = "server=59.188.255.7;user id=sq_fanyuepan;password=******;database=sq_fanyuepan;Min Pool Size=16;";
+        private static readonly string SqlConnectionString = "server=59.188.255.7;user id=sq_fanyuepan;password=panzi123;database=sq_fanyuepan;Min Pool Size=16;";
 
         #region ExecuteNonQuery
         /// <summary>
@@ -55,7 +55,7 @@ namespace API.BLL
         /// <param name="sql"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public DataTable ExecuteDateTableSQL(string sql, params SqlParameter[] parameters)
+        public static DataTable ExecuteDateTableSQL(string sql, params SqlParameter[] parameters)
         {
             return ExecuteDateTable(CommandType.Text, sql, parameters);
         }
@@ -65,7 +65,7 @@ namespace API.BLL
         /// <param name="spName"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public DataTable ExecuteDataTableStoreProcedure(string spName, params SqlParameter[] parameters)
+        public static DataTable ExecuteDataTableStoreProcedure(string spName, params SqlParameter[] parameters)
         {
             return ExecuteDateTable(CommandType.StoredProcedure, spName, parameters);
         }
@@ -78,7 +78,7 @@ namespace API.BLL
         /// <param name="sql"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public DataTable ExecuteDateTable(CommandType commandType,string sql,params SqlParameter[] parameters)
+        public static DataTable ExecuteDateTable(CommandType commandType,string sql,params SqlParameter[] parameters)
         {
             var ds = SqlHelper.ExecuteDataset(SqlConnectionString, commandType, sql, parameters);
             if (ds.Tables.Count > 0) {

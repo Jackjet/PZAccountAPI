@@ -35,7 +35,7 @@ namespace API.api
         const string OPERATE_QUERY_USER_TRANSFEROM = "user_transform";
         private object GetRequestValue(HttpContext context, string key,bool form = false)
         {
-            if (!form)
+            if (form)
             {
                 return context.Request.Form[key];
             }
@@ -72,14 +72,16 @@ namespace API.api
                 context.Response.Write(JsonHelper.JsonResult(JsonResult.JsonResultFailure, null, "token is not valid"));
                 return;
             }
-            int from_user = GetRequestValue(context, "from_user", true).ToInt();
-            int to_user = GetRequestValue(context, "to_user", true).ToInt();
-            int operate_user = GetRequestValue(context, "operate_user", true).ToInt();
-            int category_id = GetRequestValue(context, "category", true).ToInt();
-            int type = GetRequestValue(context, "type", true).ToInt();
-            float money = GetRequestValue(context, "money", true).ToFloat();
-            string other = GetRequestValue(context, "other", true).ToStrings();
-            string op = GetRequestValue(context, "op", true).ToStrings();
+            string op = GetRequestValue(context, "op").ToStrings();
+            bool form = op == OPERATE_ADD;//只有添加的时候才用form提交
+            int from_user = GetRequestValue(context, "from_user",form).ToInt();
+            int to_user = GetRequestValue(context, "to_user",form).ToInt();
+            int operate_user = GetRequestValue(context, "operate_user", form).ToInt();
+            int category_id = GetRequestValue(context, "category", form).ToInt();
+            int type = GetRequestValue(context, "type", form).ToInt();
+            float money = GetRequestValue(context, "money", form).ToFloat();
+            string other = GetRequestValue(context, "other", form).ToStrings();
+          
 
             string result = string.Empty;
             switch (op)
@@ -88,6 +90,7 @@ namespace API.api
                     result = Add(type, from_user, to_user, category_id, money, operate_user, other);
                     break;
                 case OPERATE_QUERY_PERSONAL_SUMMARY:
+                    result = PZAccountAPI.Instance.QueryUserSummary(operate_user);
                     break;
                 case OPERATE_QUERY_COST_LIST:
                     break;
@@ -98,9 +101,6 @@ namespace API.api
                 default:
                     break;
             }
-            //JsonHelper.JsonResult(JsonResult.JsonResultFailure, null, "type is not valid")
-            //最后添加
-           
             context.Response.Write(result);
         }
 
