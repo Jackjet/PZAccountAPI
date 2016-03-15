@@ -83,6 +83,7 @@
   <ItemGroup>
     <Content Include="api\account.ashx" />
     <None Include="Properties\PublishProfiles\12345.pubxml" />
+    <Content Include="PZAccountAPI接口文档说明.docx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
