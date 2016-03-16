@@ -4,3 +4,4 @@ WebApplication1.sln
 WebApplication1\API.csproj
 WebApplication1\API.csproj.user
 WebApplication1\bin
+WebApplication1\Util\ApiConfig.cs
