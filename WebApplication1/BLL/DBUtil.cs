@@ -5,12 +5,13 @@ using System.Web;
 using Microsoft.ApplicationBlocks.Data;
 using System.Data.SqlClient;
 using System.Data;
+using API.Util;
 
 namespace API.BLL
 {
     public sealed class DBUtil
     {
-        private static readonly string SqlConnectionString = "server=59.188.255.7;user id=sq_fanyuepan;password=panzi123;database=sq_fanyuepan;Min Pool Size=16;";
+        private static readonly string SqlConnectionString = "server=59.188.255.7;user id=sq_fanyuepan;password=" + ApiConfig.SQLPassword + ";database=sq_fanyuepan;Min Pool Size=16;";
 
         #region ExecuteNonQuery
         /// <summary>
