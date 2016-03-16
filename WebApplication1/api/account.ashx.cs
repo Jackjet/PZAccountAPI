@@ -37,6 +37,10 @@ namespace API.api
         /// 查询消费类型
         /// </summary>
         const string OPERATE_QUERY_ALL_CATEGORY = "category";
+        /// <summary>
+        /// 查询所有汇总
+        /// </summary>
+        const string OPERATE_QUERY_ALL_SUMMARY = "all_summary";
         private object GetRequestValue(HttpContext context, string key,bool form = false)
         {
             if (form)
@@ -110,6 +114,9 @@ namespace API.api
                     break;
                 case OPERATE_QUERY_ALL_CATEGORY:
                     result = PZAccountAPI.Instance.QueryCategory();
+                    break;
+                case OPERATE_QUERY_ALL_SUMMARY:
+                    result = PZAccountAPI.Instance.QueryAllSummary();
                     break;
                 default:
                     result = JsonHelper.JsonResult(new JsonResultModel

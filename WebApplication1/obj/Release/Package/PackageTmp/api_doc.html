@@ -1,0 +1,375 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PZAccountAPI 接口说明文档</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/grid.css" rel="stylesheet" />
+    <link href="css/docs.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+
+        <div class="page-header">
+            <h1>PZAccountAPI接口说明</h1>
+            <p class="lead">域名：http://imfyp.com</p>
+            <p class="lead">接口验证通用参数token必须传值（不公开）.</p>
+        </div>
+
+        <div class="page-header">
+            <h2>1.添加用户交易数据，消费、转账、存款等</h2>
+            <h3>URL</h3>
+            <p>/api/account.ashx?op=add</p>
+            <h3>请求方式</h3>
+            <p>POST</p>
+            <h3>请求参数</h3>
+            <div class="row">
+                <div class="col-md-3">参数名称</div>
+                <div class="col-md-3">参数类型</div>
+                <div class="col-md-3">是否必须</div>
+                <div class="col-md-3">参数说明</div>
+
+                <div class="col-md-3">from_user</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">false</div>
+                <div class="col-md-3">转账人id（转账必须，其他非必须）</div>
+
+                <div class="col-md-3">to_user</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">false</div>
+                <div class="col-md-3">被转账人id（转账必须，其他非必须）</div>
+
+                <div class="col-md-3">operate_user</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">true</div>
+                <div class="col-md-3">操作人id</div>
+
+                <div class="col-md-3">type</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">true</div>
+                <div class="col-md-3">操作类型 1 消费 2 余额 3 薪资 4 转账</div>
+
+                <div class="col-md-3">category</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">false</div>
+                <div class="col-md-3">消费类别（消费必须）</div>
+
+                <div class="col-md-3">money</div>
+                <div class="col-md-3">decimal</div>
+                <div class="col-md-3">true</div>
+                <div class="col-md-3">交易金额</div>
+
+                <div class="col-md-3">other</div>
+                <div class="col-md-3">string</div>
+                <div class="col-md-3">false</div>
+                <div class="col-md-3">备注</div>
+
+            </div>
+            <h3>返回结果</h3>
+            <p>result：0 成功 1 失败  code:ok/err msg:错误信息 data:返回数据</p>
+            <pre>
+               {
+                "result": 0,
+                "code": "ok",
+                "msg": "",
+                "data": null
+                }
+            </pre>
+        </div>
+
+        <div class="page-header">
+            <h2>2.查询用户的汇总数据</h2>
+            <h3>URL</h3>
+            <p>/api/account.ashx?op=user_summary</p>
+            <h3>请求方式</h3>
+            <p>GET</p>
+            <h3>请求参数</h3>
+            <div class="row">
+                <div class="col-md-3">参数名称</div>
+                <div class="col-md-3">参数类型</div>
+                <div class="col-md-3">是否必须</div>
+                <div class="col-md-3">参数说明</div>
+
+                <div class="col-md-3">operate_user</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">true</div>
+                <div class="col-md-3">操作人id</div>
+            </div>
+            <h3>返回结果</h3>
+            <p>result：0 成功 1 失败  code:ok/err msg:错误信息 data:返回数据</p>
+            <pre>
+                {
+                "result": 0,
+                "code": "ok",
+                "msg": null,
+                "data": {
+                    "user": {
+                        "user_id": 1,
+                        "user_name": " 张三",
+                        "user_photo": "http: //qlogo2.store.qq.com/qzone/123456789/123456789/100?1448534077"
+                    },
+                    "detail": {
+                        "cost_money": 26116.11,
+                        "cost_last": 1,
+                        "cost_salary": 8500,
+                        "trans_out": 0,
+                        "trans_in": 16900
+                    }
+                   }
+                 }
+            </pre>
+        </div>
+
+        <div class="page-header">
+            <h2>3.查询用户消费列表</h2>
+            <h3>URL</h3>
+            <p>/api/account.ashx?op=user_cost_list</p>
+            <h3>请求方式</h3>
+            <p>GET</p>
+            <h3>请求参数</h3>
+            <div class="row">
+                <div class="col-md-3">参数名称</div>
+                <div class="col-md-3">参数类型</div>
+                <div class="col-md-3">是否必须</div>
+                <div class="col-md-3">参数说明</div>
+
+                <div class="col-md-3">operate_user</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">true</div>
+                <div class="col-md-3">操作人id</div>
+
+                <div class="col-md-3">page_index</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">true</div>
+                <div class="col-md-3">分页索引默认为1</div>
+
+                <div class="col-md-3">page_size</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">false</div>
+                <div class="col-md-3">每页条数默认为20</div>
+
+
+            </div>
+            <h3>返回结果</h3>
+            <p>result：0 成功 1 失败  code:ok/err msg:错误信息 data:返回数据</p>
+            <pre>
+                {
+                "result": 0,
+                "code": "ok",
+                "msg": null,
+                "data": [
+                    {
+                        "id": 98,
+                        "operate_user": 1,
+                        "username": "张三",
+                        "userphoto": "http://qlogo2.store.qq.com/qzone/123456789/123456789/100?1448534077",
+                        "money": 5789.36,
+                        "category": 3,
+                        "name": "住",
+                        "t": 1,
+                        "tname": "消费",
+                        "other": "信用卡还款",
+                        "addtime": "2016-03-11T15:26:01.023"
+                    },
+                    {
+                        "id": 97,
+                        "operate_user": 3,
+                        "username": "李四",
+                        "userphoto": "http://qlogo2.store.qq.com/qzone/123456789/123456789/100?1448534077",
+                        "money": 30,
+                        "category": 2,
+                        "name": "食",
+                        "t": 1,
+                        "tname": "消费",
+                        "other": "午饭晚饭",
+                        "addtime": "2016-03-11T09:30:13.327"
+                    }
+                ]}
+            </pre>
+        </div>
+
+        <div class="page-header">
+            <h2>4.查询用户的薪资记录</h2>
+            <h3>URL</h3>
+            <p>/api/account.ashx?op=user_salary_list</p>
+            <h3>请求方式</h3>
+            <p>GET</p>
+            <h3>请求参数</h3>
+            <div class="row">
+                <div class="col-md-3">参数名称</div>
+                <div class="col-md-3">参数类型</div>
+                <div class="col-md-3">是否必须</div>
+                <div class="col-md-3">参数说明</div>
+
+                <div class="col-md-3">operate_user</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">true</div>
+                <div class="col-md-3">操作人id</div>
+
+                <div class="col-md-3">page_index</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">true</div>
+                <div class="col-md-3">分页索引默认为1</div>
+
+                <div class="col-md-3">page_size</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">false</div>
+                <div class="col-md-3">每页条数默认为20</div>
+
+            </div>
+            <h3>返回结果</h3>
+            <p>result：0 成功 1 失败  code:ok/err msg:错误信息 data:返回数据</p>
+            <pre>
+                {
+                "result": 0,
+                "code": "ok",
+                "msg": null,
+                "data": [
+                    {
+                        "id": 104,
+                        "operate_user": 1,
+                        "username": "张三",
+                        "userphoto": "http://qlogo2.store.qq.com/qzone/123456789/123456789/100?1448534077",
+                        "money": 8500,
+                        "category": 0,
+                        "name": null,
+                        "t": 3,
+                        "tname": "工资",
+                        "other": "工资",
+                        "addtime": "2016-02-25T00:00:00"
+                    }
+                ]
+            }
+            </pre>
+        </div>
+
+        <div class="page-header">
+            <h2>5.查询用户的转账记录</h2>
+            <h3>URL</h3>
+            <p>/api/account.ashx?op=user_transform</p>
+            <h3>请求方式</h3>
+            <p>GET</p>
+            <h3>请求参数</h3>
+            <div class="row">
+                <div class="col-md-3">参数名称</div>
+                <div class="col-md-3">参数类型</div>
+                <div class="col-md-3">是否必须</div>
+                <div class="col-md-3">参数说明</div>
+
+                <div class="col-md-3">from_user</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">false</div>
+                <div class="col-md-3">转账人id（转账必须，其他非必须）</div>
+
+                <div class="col-md-3">to_user</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">false</div>
+                <div class="col-md-3">被转账人id（转账必须，其他非必须）</div>
+
+                <div class="col-md-3">last_id</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">false</div>
+                <div class="col-md-3">最后一条记录id，用于分页</div>
+
+                <div class="col-md-3">page_size</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">false</div>
+                <div class="col-md-3">每页条数默认20</div>
+
+               
+
+            </div>
+            <h3>返回结果</h3>
+            <p>result：0 成功 1 失败  code:ok/err msg:错误信息 data:返回数据</p>
+            <pre>
+                {
+                    "result": 0,
+                    "code": "ok",
+                    "msg": null,
+                    "data": [
+                        {
+                            "id": 119,
+                            "from_user": 2,
+                            "from_username": "王五",
+                            "from_userphoto": "http://qlogo2.store.qq.com/qzone/123456789/123456789/100?1448534077",
+                            "to_user": 1,
+                            "to_username": "张三",
+                            "to_userphoto": "http://qlogo2.store.qq.com/qzone/123456789/123456789/100?1448534077",
+                            "money": 8900,
+                            "t": 4,
+                            "tname": "转账",
+                            "addtime": "2016-03-10T22:20:22"
+                    }]}
+            </pre>
+        </div>
+
+        <div class="page-header">
+            <h2>6.查询所有的消费类型（基础数据）</h2>
+            <h3>URL</h3>
+            <p>/api/account.ashx?op=category</p>
+            <h3>请求方式</h3>
+            <p>GET</p>
+            <h3>请求参数</h3>
+            <p>无</p>
+            <h3>返回结果</h3>
+            <p>result：0 成功 1 失败  code:ok/err msg:错误信息 data:返回数据</p>
+            <pre>
+                 {
+                    "result": 0,
+                    "code": "ok",
+                    "msg": null,
+                    "data": [
+                        {
+                            "id": 1,
+                            "parentid": 0,
+                            "name": "衣"
+                        },
+                        {
+                            "id": 2,
+                            "parentid": 0,
+                            "name": "食"
+                        },
+                        {
+                            "id": 3,
+                            "parentid": 0,
+                            "name": "住"
+                        },
+                        {
+                            "id": 4,
+                            "parentid": 0,
+                            "name": "行"
+                        }]}
+            </pre>
+        </div>
+
+        <div class="page-header">
+            <h2>7.查询所有用户的汇总记录</h2>
+            <h3>URL</h3>
+            <p>/api/account.ashx?op=all_summary</p>
+            <h3>请求方式</h3>
+            <p>GET</p>
+            <h3>请求参数</h3>
+             <p>无</p>
+            <h3>返回结果</h3>
+            <p>result：0 成功 1 失败  code:ok/err msg:错误信息 data:返回数据</p>
+            <pre>
+                {
+                    "result":0,
+                    "code":"ok",
+                    "msg":null,
+                    "data":
+                        {
+                         "last":10003.0,
+                         "cost":17615.88,
+                         "salary":28345.0
+                  }}
+            </pre>
+        </div>
+        </div> <!-- /container -->
+
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

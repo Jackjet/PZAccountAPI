@@ -125,7 +125,7 @@ namespace API.BLL
         #region 查询消费类别
         public string QueryCategory()
         {
-            string sql = "SELECT [id],[parentid],[name] FROM[sq_fanyuepan].[sq_fanyuepan].[category]";
+            string sql = "SELECT [id],[parentid],[name] FROM [category]";
             var dt = DBUtil.ExecuteDateTableSQL(sql, null);
             return JsonHelper.JsonResult(dt);
         }
@@ -147,11 +147,23 @@ namespace API.BLL
         }
         #endregion
 
+        #region 查询汇总
+        public string QueryAllSummary()
+        {
+            var dt = DBUtil.ExecuteDataTableStoreProcedure("[Proc_QueryAllSummary]", null);
+            if (dt.Rows.Count == 1)
+            {
+                return JsonHelper.JsonResult(new { last = dt.Rows[0]["last_all"].ToFloat(), cost = dt.Rows[0]["cost_all"].ToFloat(), salary = dt.Rows[0]["salary_all"].ToFloat() });
+            }
+            return JsonHelper.JsonResult(new { last = 0, cost = 0, salary = 0 });
+        }
+        #endregion
+
         #region 私有总查询
         private string QueryAccountList(int userid, int type, int pageIndex = 1, int pageSize = 20, int category = 0)
         {
             if (pageSize == 0) { pageSize = 20; }
-            const string spName = "[sq_fanyuepan].[Proc_GetUserAccountsList]";
+            const string spName = "[Proc_GetUserAccountsList]";
             var parameters = new List<SqlParameter> {
                 DBUtil.MakeParameterInt("type",type),
                  DBUtil.MakeParameterInt("userid",userid),
@@ -196,7 +208,7 @@ namespace API.BLL
 
         private string QueryTransform(int fuserid, int touserid, int lastid, int pageSize = 20)
         {
-            const string spName = "[sq_fanyuepan].[Proc_QueryTransform]";
+            const string spName = "[Proc_QueryTransform]";
             var parameters = new List<SqlParameter> {
                 DBUtil.MakeParameterInt("fuserid",fuserid),
                 DBUtil.MakeParameterInt("touserid",touserid),
