@@ -122,6 +122,15 @@ namespace API.BLL
         }
         #endregion
 
+        #region 查询消费类别
+        public string QueryCategory()
+        {
+            string sql = "SELECT [id],[parentid],[name] FROM[sq_fanyuepan].[sq_fanyuepan].[category]";
+            var dt = DBUtil.ExecuteDateTableSQL(sql, null);
+            return JsonHelper.JsonResult(dt);
+        }
+        #endregion
+
         #region 查询用户的账户交易记录
         public string QueryUserTransfrom(int fromid, int toid, int lastid, int pageSize = 20)
         {
@@ -182,11 +191,7 @@ namespace API.BLL
             //}
             #endregion
 
-            return JsonHelper.JsonResult(new JsonResultModel
-            {
-                data = dt,
-                result = JsonResult.JsonResultSuccess
-            });
+            return JsonHelper.JsonResult(dt);
         }
 
         private string QueryTransform(int fuserid, int touserid, int lastid, int pageSize = 20)
@@ -199,11 +204,7 @@ namespace API.BLL
                 DBUtil.MakeParameterInt("pagesize",pageSize)
             };
             var dt = DBUtil.ExecuteDataTableStoreProcedure(spName, parameters.ToArray());
-            return JsonHelper.JsonResult(new JsonResultModel
-            {
-                data = dt,
-                result = JsonResult.JsonResultSuccess
-            });
+            return JsonHelper.JsonResult(dt);
         }
         #endregion
 

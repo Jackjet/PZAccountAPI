@@ -32,6 +32,15 @@ namespace API.Util
         {
             return JsonConvert.SerializeObject(resultModel);
         }
+
+        public static string JsonResult(object obj)
+        {
+            return JsonResult(new JsonResultModel
+            {
+                result = Util.JsonResult.JsonResultSuccess,
+                data = obj
+            });
+        }
         /// <summary>
         /// 构建消息实体
         /// </summary>

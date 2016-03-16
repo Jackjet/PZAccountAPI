@@ -33,6 +33,10 @@ namespace API.api
         /// 查询转账记录
         /// </summary>
         const string OPERATE_QUERY_USER_TRANSFEROM = "user_transform";
+        /// <summary>
+        /// 查询消费类型
+        /// </summary>
+        const string OPERATE_QUERY_ALL_CATEGORY = "category";
         private object GetRequestValue(HttpContext context, string key,bool form = false)
         {
             if (form)
@@ -52,7 +56,7 @@ namespace API.api
             }
             else
             {
-                if (tokenForm.ToStrings() == "123456" || tokenNotForm.ToStrings() == "123456")
+                if (tokenForm.ToStrings() == ApiConfig.RequestToken || tokenNotForm.ToStrings() == ApiConfig.RequestToken)
                 {
                     rightToken = true;
                 }
@@ -103,6 +107,9 @@ namespace API.api
                     break;
                 case OPERATE_QUERY_USER_TRANSFEROM:
                     result = PZAccountAPI.Instance.QueryUserTransfrom(from_user, to_user, lastid, pagesize);
+                    break;
+                case OPERATE_QUERY_ALL_CATEGORY:
+                    result = PZAccountAPI.Instance.QueryCategory();
                     break;
                 default:
                     result = JsonHelper.JsonResult(new JsonResultModel
