@@ -1,7 +1,6 @@
 D:\Project\PZAccountAPI\WebApplication1\bin\WebApplication1.dll.config
 D:\Project\PZAccountAPI\WebApplication1\bin\WebApplication1.dll
 D:\Project\PZAccountAPI\WebApplication1\bin\WebApplication1.pdb
-D:\Project\PZAccountAPI\WebApplication1\bin\Newtonsoft.Json.dll
-D:\Project\PZAccountAPI\WebApplication1\obj\Debug\API.csprojResolveAssemblyReference.cache
 D:\Project\PZAccountAPI\WebApplication1\obj\Debug\WebApplication1.dll
 D:\Project\PZAccountAPI\WebApplication1\obj\Debug\WebApplication1.pdb
+D:\Project\PZAccountAPI\WebApplication1\bin\Newtonsoft.Json.dll

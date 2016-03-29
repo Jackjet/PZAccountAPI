@@ -34,6 +34,30 @@ namespace API.BLL
         }
         #endregion
 
+        #region 更新用户信息
+        public string UpdateUserPhoto(int userid,string userphoto)
+        { 
+            string sql = " UPDATE sq_fanyuepan.fyp_user SET userphoto = @photo WHERE id = @userid";
+            var parameters = new List<SqlParameter> {
+                DBUtil.MakeParameterInt("userid",userid),
+                DBUtil.MakeParameterVarChar("photo",userphoto)
+            };
+            int result = DBUtil.ExecuteNonQuerySQL(sql, parameters.ToArray());
+            return JsonHelper.JsonResult(result > 0 ? JsonResult.JsonResultSuccess : JsonResult.JsonResultFailure, null);
+        }
+
+        public string UpdateUserName(int userid, string username)
+        {
+            string sql = " UPDATE sq_fanyuepan.fyp_user SET username = @name WHERE id = @userid";
+            var parameters = new List<SqlParameter> {
+                DBUtil.MakeParameterInt("userid",userid),
+                DBUtil.MakeParameterVarChar("name",username)
+            };
+            int result = DBUtil.ExecuteNonQuerySQL(sql, parameters.ToArray());
+            return JsonHelper.JsonResult(result > 0 ? JsonResult.JsonResultSuccess : JsonResult.JsonResultFailure, null);
+        }
+        #endregion
+
         #region 添加一条消费记录
         public string AddAccount(Account account)
         {

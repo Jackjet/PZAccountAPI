@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Newtonsoft.Json;
 
 namespace API.Util
 {
@@ -30,6 +30,7 @@ namespace API.Util
         /// <returns></returns>
         public static string JsonResult(JsonResultModel resultModel)
         {
+
             return JsonConvert.SerializeObject(resultModel);
         }
 
