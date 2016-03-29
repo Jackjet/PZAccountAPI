@@ -23,6 +23,11 @@ namespace API.Util
             var model = GetResult(result, data, errmsg);
             return JsonResult(model);
         }
+
+        public static string JsonParameterError(string parameters)
+        {
+            return JsonResult(Util.JsonResult.JsonResultFailure, null, parameters + " is not valid,please check your http method and parameters");
+        }
         /// <summary>
         /// 将结果序列化
         /// </summary>

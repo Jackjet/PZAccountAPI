@@ -81,7 +81,7 @@ namespace API.api
             ValidateToken(context, out validToken);
             //如果token没有验证通过
             if (!validToken) {
-                context.Response.Write(JsonHelper.JsonResult(JsonResult.JsonResultFailure, null, "token is not valid"));
+                context.Response.Write(JsonHelper.JsonParameterError("token"));
                 return;
             }
             string op = GetRequestValue(context, "op").ToStrings();
@@ -127,11 +127,7 @@ namespace API.api
                     result = PZAccountAPI.Instance.UpdateUserName(operate_user, username);
                     break;
                 default:
-                    result = JsonHelper.JsonResult(new JsonResultModel
-                    {
-                        result = JsonResult.JsonResultFailure,
-                        msg = "op is not valid"
-                    });
+                    result = JsonHelper.JsonParameterError("op");
                     break;
             }
             context.Response.Write(result);
@@ -141,7 +137,7 @@ namespace API.api
         private string Add(int type,int from_user,int to_user,int category_id,float money,int operate_user,string other)
         {
             if (type == 0) {
-                return JsonHelper.JsonResult(JsonResult.JsonResultFailure, null, "type is not valid");
+                return JsonHelper.JsonParameterError("type");
             }
             string result = PZAccountAPI.Instance.AddAccount(new Model.Account
             {

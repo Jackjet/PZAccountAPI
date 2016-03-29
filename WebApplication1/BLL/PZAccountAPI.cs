@@ -48,6 +48,9 @@ namespace API.BLL
 
         public string UpdateUserName(int userid, string username)
         {
+            if (username == null || username.Length == 0 || userid == 0) {
+                return  JsonHelper.JsonResult( JsonResult.JsonResultFailure, null,"operate_user or user_name is valid,please check your http method and parameters");
+            }
             string sql = " UPDATE sq_fanyuepan.fyp_user SET username = @name WHERE id = @userid";
             var parameters = new List<SqlParameter> {
                 DBUtil.MakeParameterInt("userid",userid),
