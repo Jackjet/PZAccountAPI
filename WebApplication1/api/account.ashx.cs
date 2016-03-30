@@ -45,6 +45,14 @@ namespace API.api
         /// 更新用户信息
         /// </summary>
         const string OPERATE_UPDATE_USER_NAME = "user_update";
+        /// <summary>
+        /// 获取用户签到记录
+        /// </summary>
+        const string OPERATE_QUERY_USERSIGN = "get_user_sign";
+        /// <summary>
+        /// 添加用户签到记录
+        /// </summary>
+        const string OPERATE_ADD_USERSIGN = "add_user_sign";
         private object GetRequestValue(HttpContext context, string key,bool form = false)
         {
             if (form)
@@ -85,7 +93,7 @@ namespace API.api
                 return;
             }
             string op = GetRequestValue(context, "op").ToStrings();
-            bool form = (op == OPERATE_ADD || op == OPERATE_UPDATE_USER_NAME);//只有添加的时候才用form提交
+            bool form = (op == OPERATE_ADD || op == OPERATE_UPDATE_USER_NAME || op == OPERATE_ADD_USERSIGN);//只有添加的时候才用form提交
             int from_user = GetRequestValue(context, "from_user",form).ToInt();
             int to_user = GetRequestValue(context, "to_user",form).ToInt();
             int operate_user = GetRequestValue(context, "operate_user", form).ToInt();
@@ -125,6 +133,12 @@ namespace API.api
                 case OPERATE_UPDATE_USER_NAME:
                     string username = GetRequestValue(context, "user_name", true).ToStrings();
                     result = PZAccountAPI.Instance.UpdateUserName(operate_user, username);
+                    break;
+                case OPERATE_QUERY_USERSIGN:
+                    result = PZAccountAPI.Instance.GetUserSign(operate_user);
+                    break;
+                case OPERATE_ADD_USERSIGN:
+                    result = PZAccountAPI.Instance.AddUserSign(operate_user);
                     break;
                 default:
                     result = JsonHelper.JsonParameterError("op");

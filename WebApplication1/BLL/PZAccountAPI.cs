@@ -186,6 +186,43 @@ namespace API.BLL
         }
         #endregion
 
+        #region 获取签到 http://localhost:2165/api/account.ashx?token=123123&op=get_user_sign&operate_user=1
+        public string GetUserSign(int userid)
+        {
+            string date = DateTime.Now.ToString("yyyy-MM-dd");
+            string yesday = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
+            string proceName = "Proc_GetSportsSign";
+            var parameters = new List<SqlParameter> {
+                DBUtil.MakeParameterInt("userid",userid),
+                DBUtil.MakeParameterVarChar("today",date),
+                DBUtil.MakeParameterVarChar("yesday",yesday)
+            };
+            var dt = DBUtil.ExecuteDataTableStoreProcedure(proceName, parameters.ToArray());
+            var json = new { maxday = dt.Rows[0][0].ToInt(), issign = dt.Rows[0][1].ToInt() };
+            return JsonHelper.JsonResult(json);
+        }
+        #endregion
+
+        #region 添加签到
+        public string AddUserSign(int userid)
+        {
+            if (userid == 0) { return JsonHelper.JsonParameterError("operate_user"); }
+            string date = DateTime.Now.ToString("yyyy-MM-dd");
+            string yesday = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
+            string proceName = "Proc_AddSportSign";
+            var parameters = new List<SqlParameter> {
+                DBUtil.MakeParameterInt("userid",userid),
+                DBUtil.MakeParameterVarChar("date",date),
+                DBUtil.MakeParameterVarChar("yesday",yesday)
+            };
+            var dt = DBUtil.ExecuteDataTableStoreProcedure(proceName, parameters.ToArray());
+            if (dt.Rows.Count == 1) {
+                return JsonHelper.JsonResult(new JsonResultModel { result = JsonResult.JsonResultSuccess });
+            }
+            return JsonHelper.JsonResult(new JsonResultModel { result = JsonResult.JsonResultFailure });
+        }
+        #endregion
+
         #region 私有总查询
         private string QueryAccountList(int userid, int type, int pageIndex = 1, int pageSize = 20, int category = 0)
         {

@@ -438,6 +438,69 @@
             }
             </pre>
         </div>
+        <div class="page-header">
+            <h2>10.添加用户签到</h2>
+            <h3>URL</h3>
+            <p>/api/account.ashx?op=add_user_sign</p>
+            <h3>请求方式</h3>
+            <p>POST</p>
+            <h3>请求参数</h3>
+            <div class="row">
+                <div class="col-md-3">参数名称</div>
+                <div class="col-md-3">参数类型</div>
+                <div class="col-md-3">是否必须</div>
+                <div class="col-md-3">参数说明</div>
+
+                <div class="col-md-3">operate_user</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">true</div>
+                <div class="col-md-3">操作人id</div>
+
+            </div>
+            <h3>返回结果</h3>
+            <p>result：0 成功 1 失败  code:ok/err msg:错误信息 data:返回数据</p>
+            <pre>
+                {
+                "result": 0,
+                "code": "ok",
+                "msg": null,
+                "data": null
+            }
+            </pre>
+        </div>
+        <div class="page-header">
+            <h2>11.查询用户签到</h2>
+            <h3>URL</h3>
+            <p>/api/account.ashx?op=get_user_sign</p>
+            <h3>请求方式</h3>
+            <p>GET</p>
+            <h3>请求参数</h3>
+            <div class="row">
+                <div class="col-md-3">参数名称</div>
+                <div class="col-md-3">参数类型</div>
+                <div class="col-md-3">是否必须</div>
+                <div class="col-md-3">参数说明</div>
+
+                <div class="col-md-3">operate_user</div>
+                <div class="col-md-3">int</div>
+                <div class="col-md-3">true</div>
+                <div class="col-md-3">操作人id</div>
+
+            </div>
+            <h3>返回结果</h3>
+            <p>result：0 成功 1 失败  code:ok/err msg:错误信息 data:返回数据</p>
+            <pre>
+                   {
+                    "result":0,
+                    "code":"ok",
+                    "msg":null,
+                    "data":{"
+                                maxday":2,
+                                "issign":2
+                            }
+                    }
+            </pre>
+        </div>
         </div> <!-- /container -->
 </body>
 </html>
